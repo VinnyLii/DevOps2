@@ -11,10 +11,12 @@ class Course:
         self.assignments.append(assignment)
 
 class Assignment:
-    def _init_(self, name, due_date):
+    def _init_(self, name, due_date, day_frame):
         self.name = name
         self.due_date = due_date
+        self.day_frame = day_frame
         self.completed = False
+      
 
     def mark_completed(self):
         self.completed = True
