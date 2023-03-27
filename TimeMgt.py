@@ -1,7 +1,7 @@
 import datetime
 
 class Course:
-    def _init_(self, name, start_date, end_date):
+    def _init_(self, name, start_date, end_date, Course_code):
         self.name = name
         self.start_date = start_date
         self.end_date = end_date
