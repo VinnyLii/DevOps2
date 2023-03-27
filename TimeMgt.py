@@ -7,7 +7,7 @@ class Course:
         self.end_date = end_date
         self.assignments = []
 
-    def add_assignment(self, assignment):
+    def add_assignment(self, assignment, trimester):
         self.assignments.append(assignment)
 
 class Assignment:
