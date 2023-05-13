@@ -8,7 +8,7 @@ class UnitTestCommand(TestCommand):
         test_loader = unittest.TestLoader()
         test_runner = test_loader.discover('test')
         test_runner.run(test_loader.loadTestsFromName('test_testFile'))
-
+        
 setup(
     name='TimeMgt',
     version='1.0',
