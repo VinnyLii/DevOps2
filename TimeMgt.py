@@ -1,7 +1,7 @@
 import datetime
 
 class Course:
-    def _init_(self, name, start_date, end_date, Course_code):
+    def __init__(self, name, start_date, end_date, Course_code):
         self.name = name
         self.start_date = start_date
         self.end_date = end_date
@@ -11,7 +11,7 @@ class Course:
         self.assignments.append(assignment)
 
 class Assignment:
-    def _init_(self, name, due_date, day_frame):
+    def __init__(self, name, due_date, day_frame):
         self.name = name
         self.due_date = due_date
         self.day_frame = day_frame
@@ -60,5 +60,5 @@ def main():
         else:
             print("Invalid choice. Please try again.")
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     main()
