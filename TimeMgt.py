@@ -22,6 +22,7 @@ class Assignment:
         self.completed = True
 
 def print_courses(courses):
+    output = ""
     for i, course in enumerate(courses):
         print(f"{i+1}. {course.name} ({course.start_date.strftime('%m/%d/%Y')} - {course.end_date.strftime('%m/%d/%Y')})")
         for j, assignment in enumerate(course.assignments):
@@ -29,6 +30,8 @@ def print_courses(courses):
             if assignment.completed:
                 status = "Completed"
             print(f"   {j+1}. {assignment.name} (due {assignment.due_date.strftime('%m/%d/%Y')}, {status})")
+             output += '\n'
+    return output.rstrip('\n')
 
 def main():
     courses = []
