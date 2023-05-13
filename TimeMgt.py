@@ -25,9 +25,7 @@ class Assignment:
 def print_courses(courses):
     output = ''
     for i, course in enumerate(courses):
-        output += '{}. {} [{}]'.format(i+1, course.name, course.Course_code)
-        if course.start_date and course.end_date:
-            output += ' ({} - {})'.format(course.start_date.strftime('%m/%d/%Y'), course.end_date.strftime('%m/%d/%Y'))
+        output += '{}. {}'.format(i+1, course.name)
         output += '\n'
     return output.strip()
 
