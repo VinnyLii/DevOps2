@@ -1,7 +1,7 @@
 import datetime
 
 class Course:
-    def _init_(self, name, start_date, end_date, Course_code):
+    def __init__(self, name, start_date, end_date, Course_code):
         self.name = name
         self.start_date = start_date
         self.end_date = end_date
@@ -11,7 +11,7 @@ class Course:
         self.assignments.append(assignment)
 
 class Assignment:
-    def _init_(self, name, due_date, day_frame):
+    def __init__(self, name, due_date, day_frame):
         self.name = name
         self.due_date = due_date
         self.day_frame = day_frame
@@ -22,6 +22,7 @@ class Assignment:
         self.completed = True
 
 def print_courses(courses):
+    output = ""
     for i, course in enumerate(courses):
         print(f"{i+1}. {course.name} ({course.start_date.strftime('%m/%d/%Y')} - {course.end_date.strftime('%m/%d/%Y')})")
         for j, assignment in enumerate(course.assignments):
@@ -29,6 +30,8 @@ def print_courses(courses):
             if assignment.completed:
                 status = "Completed"
             print(f"   {j+1}. {assignment.name} (due {assignment.due_date.strftime('%m/%d/%Y')}, {status})")
+             output += '\n'
+    return output.rstrip('\n')
 
 def main():
     courses = []
@@ -60,5 +63,5 @@ def main():
         else:
             print("Invalid choice. Please try again.")
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     main()
