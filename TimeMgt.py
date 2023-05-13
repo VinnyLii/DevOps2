@@ -1,13 +1,15 @@
 import datetime
+import unittest
 
 class Course:
     def __init__(self, name, start_date, end_date, Course_code):
         self.name = name
         self.start_date = start_date
         self.end_date = end_date
+        self.Course_code = Course_code
         self.assignments = []
 
-    def add_assignment(self, assignment, trimester):
+    def add_assignment(self, assignment):
         self.assignments.append(assignment)
 
 class Assignment:
@@ -17,51 +19,43 @@ class Assignment:
         self.day_frame = day_frame
         self.completed = False
       
-
     def mark_completed(self):
         self.completed = True
-
+        
 def print_courses(courses):
-    output = ""
+    output = ''
     for i, course in enumerate(courses):
-        print(f"{i+1}. {course.name} ({course.start_date.strftime('%m/%d/%Y')} - {course.end_date.strftime('%m/%d/%Y')})")
-        for j, assignment in enumerate(course.assignments):
-            status = "Incomplete"
-            if assignment.completed:
-                status = "Completed"
-            print(f"   {j+1}. {assignment.name} (due {assignment.due_date.strftime('%m/%d/%Y')}, {status})")
-             output += '\n'
-    return output.rstrip('\n')
+        output += '{}. {} [{}]'.format(i+1, course.name, course.Course_code)
+        if course.start_date and course.end_date:
+            output += ' ({} - {})'.format(course.start_date.strftime('%m/%d/%Y'), course.end_date.strftime('%m/%d/%Y'))
+        output += '\n'
+    return output.strip()
 
-def main():
-    courses = []
-    while True:
-        print("\n1. Add course\n2. Add assignment\n3. Mark assignment as completed\n4. View courses and assignments\n5. Exit")
-        choice = input("Enter your choice: ")
-        if choice == "1":
-            name = input("Enter the name of the course: ")
-            start_date = input("Enter the start date of the course (MM/DD/YYYY): ")
-            end_date = input("Enter the end date of the course (MM/DD/YYYY): ")
-            courses.append(Course(name, datetime.datetime.strptime(start_date, '%m/%d/%Y'), datetime.datetime.strptime(end_date, '%m/%d/%Y')))
-            print("Course added successfully!")
-        elif choice == "2":
-            course_index = int(input("Enter the number of the course to add the assignment to: ")) - 1
-            name = input("Enter the name of the assignment: ")
-            due_date = input("Enter the due date of the assignment (MM/DD/YYYY): ")
-            courses[course_index].add_assignment(Assignment(name, datetime.datetime.strptime(due_date, '%m/%d/%Y')))
-            print("Assignment added successfully!")
-        elif choice == "3":
-            course_index = int(input("Enter the number of the course that the assignment is in: ")) - 1
-            assignment_index = int(input("Enter the number of the assignment to mark as completed: ")) - 1
-            courses[course_index].assignments[assignment_index].mark_completed()
-            print("Assignment marked as completed!")
-        elif choice == "4":
-            print_courses(courses)
-        elif choice == "5":
-            print("Goodbye!")
-            break
-        else:
-            print("Invalid choice. Please try again.")
+class TestCourseAndAssignment(unittest.TestCase):
+    
+    def setUp(self):
+        self.course = Course('DevOps2', datetime.datetime.now(), datetime.datetime.now() + datetime.timedelta(days=30), 'DEVOPS2-101')
+        self.assignment = Assignment('test assignment', datetime.datetime.now() + datetime.timedelta(days=10), '3 days')
+    
+    def test_course_has_name(self):
+        self.assertEqual(self.course.name, 'DevOps2')
+        
+    def test_course_has_code(self):
+        self.assertEqual(self.course.Course_code, 'DEVOPS2-101')
+        
+    def test_assignment_has_name(self):
+        self.assertEqual(self.assignment.name, 'test assignment')
+        
+    def test_assignment_mark_completed(self):
+        self.assertFalse(self.assignment.completed)
+        self.assignment.mark_completed()
+        self.assertTrue(self.assignment.completed)
+        
+    def test_print_courses(self):
+        courses = [self.course]
+        expected_output = '1. DevOps2 [DEVOPS2-101] ({} - {})\n'.format(datetime.datetime.now().strftime('%m/%d/%Y'), (datetime.datetime.now() + datetime.timedelta(days=30)).strftime('%m/%d/%Y'))
+        self.assertEqual(print_courses(courses), expected_output)
+        print(print_courses(courses))
 
 if __name__ == '__main__':
-    main()
+    unittest.main()
